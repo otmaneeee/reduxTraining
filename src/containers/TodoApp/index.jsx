@@ -6,7 +6,7 @@ import { buttonProps, cardProps } from "../../constants";
 import React, { useState } from "react";
 import { useDispatch, } from "react-redux";
 import { useSelector } from "react-redux";
-import { addTask,removeALL } from "./action";
+import { addTask,removeALL,confirmTask ,removeTask} from "./action";
 const TodoApp = () => {
   const [todo, setTodo] = useState({ title: "", heure: "" });
   // const [todoList, setTodoList] = useState([]);
@@ -44,18 +44,12 @@ const TodoApp = () => {
     setTodo({ title: "", heure: "" });
     //console.log(listTodo);
   };
-  // const handledo = (e) => {
-  //   setTodoList(
-  //     todoList.map((item) => {
-  //       if (item.id === e.target.name) item.isDone = true;
-
-  //       return item;
-  //     })
-  //   );
-  // };
-  // const handleremove = (e) => {
-  //   setTodoList(todoList.filter((item) => item.id !== e.target.name));
-  // };
+  const handledo = (e) => {
+     dispatch(confirmTask(e.target.name));
+  };
+  const handleremove = (e) => {
+    dispatch(removeTask(e.target.name));
+  };
   const showResult = (todo) => (
     <div
       style={{ backgroundColor: todo.isDone ? "#b7ebc6" : "" }}
@@ -72,14 +66,14 @@ const TodoApp = () => {
           id={`validate_btn`}
           color={buttonProps.color.outlineSuccess}
           text={buttonProps.text.todoDone}
-          // onClick={handledo}
+          onClick={handledo}
         />
         <CustomButton
           name={todo.id}
           color={buttonProps.color.outlineDanger}
           text={buttonProps.text.todosupp}
           id={`delete_btn`}
-          // onClick={handleremove}
+          onClick={handleremove}
         />
       </div>
     </div>
