@@ -3,16 +3,22 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { textInputProps } from "../../constants";
 import { buttonProps, cardProps } from "../../constants";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, } from "react-redux";
 import { useSelector } from "react-redux";
-import { addTask,removeALL,confirmTask ,removeTask} from "./action";
+import { execute } from "../../services/request";
+import { addTask,removeALL,confirmTask ,removeTask,pushTasks} from "./action";
+import { listMission } from "./constants";
+import { collections } from "../../constants";
 const TodoApp = () => {
   const [todo, setTodo] = useState({ title: "", heure: "" });
   // const [todoList, setTodoList] = useState([]);
   const [counter, setCounter] = useState(0);
   const dispatch = useDispatch();
   const todoList = useSelector((state)=>state.Othmane.taskList);
+  useEffect(()=>{
+    dispatch(pushTasks(listMission));
+  },[]);
   const handleChange = (e) => {
     switch (e.target.name) {
       case textInputProps.timeTodo.name:
@@ -41,6 +47,7 @@ const TodoApp = () => {
     // ]);
     dispatch(addTask({ task: { ...todo }, isDone: false, id: `${counter}` }));
     setCounter(counter + 1);
+    execute(collections.todo).create({ task: { ...todo }, isDone: false, id: `${counter}` });
     setTodo({ title: "", heure: "" });
     //console.log(listTodo);
   };

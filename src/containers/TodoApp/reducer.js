@@ -5,6 +5,11 @@ const initialState = {
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionsType.PUSH_TASKS:{
+        return{
+            taskList : action.payload,
+        }
+    }
     case actionsType.ADD_TASK: {
       return {
         taskList: [...state.taskList, action.payload],

@@ -211,3 +211,8 @@ export const listeEmailPassword = [
   { email: "b@b.com", password: "p2" },
   { email: "c@c.com", password: "p3" }
 ];
+
+export const collections = {
+  todo : "/tasks",
+  user : "/user",
+}
